@@ -79,7 +79,39 @@
  */
 class Solution {
     public int romanToInt(String s) {
-        
+        int length = s.length();
+        char p = 0;
+        int sum = 0;
+        for (int i = 0; i < length; i++) {
+            char c = s.charAt(i);
+            switch (c) {
+                case 'I':
+                    sum += 1;
+                    break;
+                case 'V':
+                    sum += p == 'I' ? 3 : 5;
+                    break;
+                case 'X':
+                    sum += p == 'I' ? 8 : 10;
+                    break;
+                case 'L':
+                    sum += p == 'X' ? 30 : 50;
+                    break;
+                case 'C':
+                    sum += p == 'X' ? 80 : 100;
+                    break;
+                case 'D':
+                    sum += p == 'C' ? 300 : 500;
+                    break;
+                case 'M':
+                    sum += p == 'C' ? 800 : 1000;
+                    break;
+                default:
+                    break;
+            }
+            p = c;
+        }
+        return sum;
     }
 }
 

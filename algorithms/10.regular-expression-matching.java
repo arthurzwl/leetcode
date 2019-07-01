@@ -28,7 +28,7 @@ class Solution {
                     isMatched[i][j] = isMatched[i - 1][j - 1];
                 } else if (p.charAt(j - 1) == '*') {
                     isMatched[i][j] = j - 2 >= 0 && isMatched[i][j - 2]
-                    || (isMatched[i - 1][j] || isMatched[i][j - 1] || isMatched[i][j - 2]) && (p.charAt(j - 2) == '.' || p.charAt(j - 2) == s.charAt(i - 1));
+                    || (isMatched[i - 1][j] || isMatched[i][j - 1]) && (p.charAt(j - 2) == '.' || p.charAt(j - 2) == s.charAt(i - 1));
                 }
             }
         }

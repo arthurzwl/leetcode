@@ -17,22 +17,25 @@ class Solution {
      * @return
      */
     public boolean isMatchDynamic(String s, String p) {
-        boolean[][] isMatched = new boolean[s.length() + 1][p.length() + 1];
-        isMatched[0][0] = true;
-        for (int i = 1; i < p.length(); i++) {
-            isMatched[0][i + 1] = p.charAt(i) == '*' && isMatched[0][i - 1];
+        boolean[][] ans = new boolean[s.length() + 1][p.length() + 1];
+        ans[0][0] = true;
+        for (int i = 0; i < p.length(); i++) {
+            if (p.charAt(i) == '*' && ans[0][i - 1]) ans[0][i + 1] = true;
         }
-        for (int i = 1; i <= s.length(); i++) {
-            for (int j = 1; j <= p.length(); j++) {
-                if (p.charAt(j - 1) == '.' || p.charAt(j - 1) == s.charAt(i - 1)) {
-                    isMatched[i][j] = isMatched[i - 1][j - 1];
-                } else if (p.charAt(j - 1) == '*') {
-                    isMatched[i][j] = j - 2 >= 0 && isMatched[i][j - 2]
-                    || (isMatched[i - 1][j] || isMatched[i][j - 1]) && (p.charAt(j - 2) == '.' || p.charAt(j - 2) == s.charAt(i - 1));
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = 0; j < p.length(); j++) {
+                if (p.charAt(j) == '.' || s.charAt(i) == p.charAt(j)) {
+                    ans[i + 1][j + 1] = ans[i][j];
+                } else if (p.charAt(j) == '*') {
+                    if (s.charAt(i) != p.charAt(j - 1) && p.charAt(j - 1) != '.') {
+                        ans[i + 1][j + 1] = ans[i + 1][j - 1];
+                    } else {
+                        ans[i + 1][j + 1] = ans[i + 1][j] || ans[i + 1][j - 1] || ans[i][j + 1];
+                    }
                 }
             }
         }
-        return isMatched[s.length()][p.length()];
+        return ans[s.length()][p.length()];
     }
 
     /**
